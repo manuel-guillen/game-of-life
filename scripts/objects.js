@@ -231,6 +231,26 @@ LifeBoardManager = function(width, height) {
 		state[x+4][y+10] = true;
 	}
 
+	that.placeGlider = function(x,y) {
+		state[x][y] = true;
+		state[x+1][y+1] = true;
+		state[x+2][y+1] = true;
+		state[x+1][y+2] = true;
+		state[x][y+2] = true;
+	}
+
+	that.placeLightweightSpaceship = function(x,y) {
+		state[x+1][y] = true;
+		state[x+2][y] = true;
+		state[x+3][y] = true;
+		state[x+4][y] = true;
+		state[x+4][y+1] = true;
+		state[x+4][y+2] = true;
+		state[x+3][y+3] = true;
+		state[x][y+3] = true;
+		state[x][y+1] = true;
+	}
+
 	Object.freeze(that);
 	return that;
 }

@@ -166,6 +166,22 @@ $(document).ready(function(e) {
 
     drawBoard();
   })
+
+  $("#spacesButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeGlider(20,20);
+    bm.placeLightweightSpaceship(40,20);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });
