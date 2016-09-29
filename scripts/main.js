@@ -75,7 +75,7 @@ $(document).ready(function(e) {
   });
 
   // =========== BUTTON LISTENERS SETUP ============
-  var runButton = $("#runButton")[0];
+  var runButton = $("#runButton");
 
   var stepAndDraw = function() {
     bm.lifeStep();
@@ -85,21 +85,23 @@ $(document).ready(function(e) {
   var running = false;
   var runningVar = null;
   
-  runButton.addEventListener('click', function(e) {
+  runButton.click(function(e) {
     if(running) {
       clearTimeout(runningVar);
-      runButton.innerHTML = 'Run';
+      runButton.removeAttr('style')
+               .html("Run");
       running = false;
     } else {
       runningVar = setInterval(stepAndDraw, 50);
-      runButton.innerHTML = 'Stop';
+      runButton.css("background-color", "#f44336")
+               .html("Stop");
       running = true;
     }
   });
   
-  $("#stepButton")[0].addEventListener('click', function(e) {stepAndDraw()});
+  $("#stepButton").click(function(e) {stepAndDraw()});
 
-  $("#clearButton")[0].addEventListener('click', function(e) {
+  $("#clearButton").click(function(e) {
     bm.clearBoard();
     drawBoard();
   });

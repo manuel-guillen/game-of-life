@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	background-color: #CCC;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+div#header {
+	text-align: center;
+	font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	background-color: #3C8B94;
+}
+
+div#board {
+	text-align: center;
+}
+
+div#controls {
+	padding-top: 3px;
+}
+
+button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+button:hover {
+    background-color: #3C8B94;
+}
