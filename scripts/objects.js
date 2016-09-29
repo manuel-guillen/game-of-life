@@ -14,10 +14,10 @@ Point = function(x,y) {
 		var neighbors = []
 		from_to(-1,1, function(dx) {
 			from_to(-1,1, function(dy) {
-				neighbors.push(Point(x + dx, y + dy))
+				if (dx != 0 || dy != 0) neighbors.push(Point(x + dx, y + dy))
 			})
 		})
-		return neighbors.filter(function(p){return p.x != x || p.y != y})
+		return neighbors
 	}
 
 	Object.freeze(that)
@@ -58,7 +58,7 @@ LifeBoardManager = function(width, height) {
 			from_to(0, height-1, function(y) {
 				var n = that.getAliveNeighbors(x,y).length;
 				if (state[x][y] && (n < 2 || n > 3) || !state[x][y] && n === 3) {
-					points.push(Point(x,y))
+					points.push(Point(x,y));
 				}
 			})
 		})
