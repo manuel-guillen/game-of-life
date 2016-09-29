@@ -123,6 +123,22 @@ $(document).ready(function(e) {
     drawBoard();
   })
 
+  $("#smallsButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeBlinker(10,10);
+    bm.placeToad(20,10);
+    bm.placeBeacon(30,10);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });

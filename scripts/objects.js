@@ -108,6 +108,32 @@ LifeBoardManager = function(width, height) {
 		state[x][y+1] = true;
 	}
 
+	that.placeBlinker = function(x,y) {
+		state[x][y] = true;
+		state[x][y+1] = true;
+		state[x][y+2] = true;
+	}
+
+	that.placeToad = function(x,y) {
+		state[x][y] = true;
+		state[x+1][y] = true;
+		state[x+2][y] = true;
+		
+		state[x-1][y+1] = true;
+		state[x][y+1] = true;
+		state[x+1][y+1] = true;
+	}
+
+	that.placeBeacon = function(x,y) {
+		state[x][y] = true;
+		state[x+1][y] = true;
+		state[x][y+1] = true;
+
+		state[x+3][y+3] = true;
+		state[x+3][y+2] = true;
+		state[x+2][y+3] = true;
+	}
+
 	Object.freeze(that);
 	return that;
 }
