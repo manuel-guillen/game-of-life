@@ -1,15 +1,17 @@
+// Iteration functional, which calls f on integers from,...,to
 from_to = function (from, to, f) {
   			if (from > to) return;
 			f(from); from_to(from+1, to, f);
 		  }
-// =========================================================
 
+// Represents a two-dimensional lattice point (a 2D point of integers) 
 Point = function(x,y) {
 	var that = Object.create(Point.prototype)
 
-	that.getX = function(){return x;}
-	that.getY = function(){return y;}
+	that.getX = function(){return x;}	// Returns x-component of this point
+	that.getY = function(){return y;}	// Returns y-component of this point
 
+	// Returns a list of the 8 lattice points neighboring this point
 	that.getNeighbors = function() {
 		var neighbors = []
 		from_to(-1,1, function(dx) {
@@ -24,13 +26,18 @@ Point = function(x,y) {
 	return that
 }
 
-LifeBoardManager = function(width, height) {
-	var that = Object.create(LifeBoardManager.prototype);
+// Represents a "Game of Life" game board with dimensions (width by height)
+LifeBoard = function(width, height) {
+	var that = Object.create(LifeBoard.prototype);
 
-	that.getWidth = function() {return width;}
-	that.getHeight = function() {return height;}
+	that.getWidth = function() {return width;}		// Returns width of this board
+	that.getHeight = function() {return height;}	// Returns height of this board
 
+	// "Private field" representing the state of the board as a 2D array of booleans
+	// where the boolean value is whether the cell is alive.
 	var state = []
+
+	// Initializer for state field
 	from_to(0,width-1, function() {
 		var lst = []
 		from_to(0, height-1, function() {
@@ -39,10 +46,11 @@ LifeBoardManager = function(width, height) {
 		state.push(lst)
 	})
 
-	that.getState = function(x,y) {return state[x][y]}
-	that.setState = function(x,y, s) {state[x][y] = s}
-	that.flipState = function(x,y) {state[x][y] = !state[x][y]}
+	that.getState = function(x,y) {return state[x][y]}			// Gets the state of cell (x,y)
+	that.setState = function(x,y, s) {state[x][y] = s}			// Sets the state of cell (x,y) to s
+	that.flipState = function(x,y) {state[x][y] = !state[x][y]}	// Flips the state of cell (x,y)
 
+	// Returns a list of Point objects, representing the neighbors of the cell (x,y) that are in the alive state
 	that.getAliveNeighbors = function(x,y) {
 		var fltr = function(p) {
 			var pX = p.getX();
@@ -52,6 +60,13 @@ LifeBoardManager = function(width, height) {
 		return Point(x,y).getNeighbors().filter(fltr)
 	}
 
+	/* Performs one "tick" of The Game of Life on the board, updating the board to the next generation.
+	   As specified in "The Game of Life" by John Conway:
+			- Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+			- Any live cell with two or three live neighbours lives on to the next generation.
+			- Any live cell with more than three live neighbours dies, as if by over-population.
+			- Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+	*/
 	that.lifeStep = function() {
 		points = []
 		from_to(0, width-1, function(x) {
@@ -66,6 +81,7 @@ LifeBoardManager = function(width, height) {
 		points.forEach(function(p) {that.flipState(p.getX(),p.getY())})
 	}
 
+	// Clears the board (sets all cells to the dead state).
 	that.clearBoard = function() {
 		from_to(0, width-1, function(x){
 			from_to(0, height-1, function(y) {
@@ -101,6 +117,13 @@ LifeBoardManager = function(width, height) {
 								 Point(21,3), Point(21,4), Point(22,1), Point(22,5), Point(24,0), Point(24,1), Point(24,5), Point(24,6),
 								 Point(34,2), Point(34,3), Point(35,2), Point(35,3)]
 
+	/** Takes a set of "delta" points and returns a function that
+		takes in the x,y coordinates of a cell to be used as the "origin"
+		for the delta points, as they are set to the alive state. The
+		delta points determine a shape to be "highlighted" (set to alive) on
+		the board, and the (x,y) represents where the shape is placed on the board.
+		The function retured in a placer for the shape, taking in the placement point.
+	*/ 
 	var deltaPointsToPlacer = function(points) {
 		return function(x,y) {
 			points.forEach(function(p) {

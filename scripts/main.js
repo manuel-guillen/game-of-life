@@ -1,32 +1,35 @@
-from_to = function (from, to, f) {
-  			     if (from > to) return;
-			       f(from); from_to(from+1, to, f);
-		      }
+const CELL_SIZE = 10;     // Width & height of cells in pixels
+const RED = "#F44336";
+const WHITE = "#FFFFFF";
+const BLUE = "#386AFF";
+const GRAY = "#DDDDDD";
 
+// Iteration functional, which calls f on integers from,...,to
+from_to = function (from, to, f) {
+             if (from > to) return;
+             f(from); from_to(from+1, to, f);
+          }
+
+// Returns the location of a click event, relative to the canvas clicked
 getMousePosition = function(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
   return Point(evt.clientX - rect.left, evt.clientY - rect.top);
 }
-// =================================================
 
+// MAIN METHOD
+// ============================
 $(document).ready(function(e) {
   
   // =============== KEY VARIABLES =================
-  const CELL_SIZE = 10;
-  const GRAY = "#DDDDDD";
-  const BLUE = "#386AFF";
-  const WHITE = "#FFFFFF";
-
   var canvas = $("#canvas")[0];
   
   var width = canvas.width/CELL_SIZE;
   var height = canvas.height/CELL_SIZE;
   
-  var context = canvas.getContext("2d");
+  var context = canvas.getContext("2d");  // Graphics context of canvas
 
   // ================ BOARD SETUP ==================
-
-  var bm = LifeBoardManager(width, height);
+  var board = LifeBoard(width, height);
 
   // ================ CANVAS SETUP =================
   context.strokeStyle = GRAY;
@@ -36,7 +39,7 @@ $(document).ready(function(e) {
       from_to(0, width-1, function(x) {
         context.beginPath();
         context.rect(CELL_SIZE*x, CELL_SIZE*y, CELL_SIZE, CELL_SIZE);
-        context.fillStyle = bm.getState(x,y) ? BLUE : WHITE;
+        context.fillStyle = board.getState(x,y) ? BLUE : WHITE;
         context.fill();
         context.stroke();
       });
@@ -45,8 +48,8 @@ $(document).ready(function(e) {
   drawBoard();
 
   // ============ MOUSE LISTENERS SETUP ============
-  var holding = false;
-  var dragged = false;
+  var holding = false;  // True, when mouse is held down.
+  var dragged = false;  // True, if mouse was moved while held down (dragging)
   
   canvas.addEventListener('mousedown', function(e) {holding = true;});
   canvas.addEventListener('mouseup',   function(e) {holding = false;});
@@ -57,20 +60,20 @@ $(document).ready(function(e) {
       var point = getMousePosition(canvas, evnt);
       var x = Math.floor(point.getX()/CELL_SIZE);
       var y = Math.floor(point.getY()/CELL_SIZE);
-      bm.setState(x,y, evnt.button === 0);
+      board.setState(x,y, evnt.button === 0);
       drawBoard();
     }
   });
   
   canvas.addEventListener('click', function(evnt) {
-    if (dragged) {
-      dragged = false;
+    if (dragged) {      // Don't undo filling in of
+      dragged = false;  // last cell from drag.
       return;
     }
     var point = getMousePosition(canvas, evnt);
     var x = Math.floor(point.getX()/CELL_SIZE);
     var y = Math.floor(point.getY()/CELL_SIZE);
-    bm.flipState(x,y);
+    board.flipState(x,y);
     drawBoard();
   });
 
@@ -78,36 +81,38 @@ $(document).ready(function(e) {
   var runButton = $("#runButton");
 
   var stepAndDraw = function() {
-    bm.lifeStep();
+    board.lifeStep();
     drawBoard();
   }
 
-  var running = false;
-  var runningVar = null;
+  var running = false;    // True, if game is running.
+  var runningVar = null;  // Holds intervaled execution of game.
   
   runButton.click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
+    if(!running) {
+      runningVar = setInterval(stepAndDraw, 50);  // Executes stepAndDraw() every 50ms
+      runButton.css("background-color", RED)
+               .html("Stop");
+      running = true;
+    } else {
+      clearTimeout(runningVar);                   // Deletes periodic execution of stepAndDraw
       runButton.removeAttr('style')
                .html("Run");
       running = false;
-    } else {
-      runningVar = setInterval(stepAndDraw, 50);
-      runButton.css("background-color", "#f44336")
-               .html("Stop");
-      running = true;
     }
   });
   
-  $("#stepButton").click(function(e) {stepAndDraw()});
+  $("#stepButton").click(function(e) {stepAndDraw()});  // Executes stepAndDraw() once.
 
   $("#clearButton").click(function(e) {
-    bm.clearBoard();
+    board.clearBoard();
     drawBoard();
   });
 
   // ----------------------------------------------------
 
+  // Takes a function, stops game if running, clears the board
+  // executes the function, and redraws the board.
   var resetTo = function(f) {
     if(running) {
       clearTimeout(runningVar);
@@ -115,57 +120,55 @@ $(document).ready(function(e) {
                .html("Run");
       running = false;
     }
-    bm.clearBoard();
+    board.clearBoard();
     f();
     drawBoard();
   }
 
   $("#stillsButton").click(function(e) { resetTo(function() {
-      bm.placeBlock(10,10);
-      bm.placeBeehive(20,10);
-      bm.placeLoaf(10,20);
-      bm.placeBoat(20,20);
+      board.placeBlock(10,10);
+      board.placeBeehive(20,10);
+      board.placeLoaf(10,20);
+      board.placeBoat(20,20);
     });
   })
 
   $("#smallsButton").click(function(e) { resetTo(function() {
-      bm.placeBlinker(10,10);
-      bm.placeToad(20,10);
-      bm.placeBeacon(30,10);
+      board.placeBlinker(10,10);
+      board.placeToad(20,10);
+      board.placeBeacon(30,10);
     });
   })
 
   $("#pulsarButton").click(function(e) { resetTo(function() {
-      bm.placePulsar(50,30);
+      board.placePulsar(50,30);
     });
   })
 
   $("#pentaButton").click(function(e) { resetTo(function() {
-      bm.placePentadecathalon(50,30);
+      board.placePentadecathalon(50,30);
     });
   })
 
   $("#spacesButton").click(function(e) { resetTo(function() {
-      bm.placeGlider(20,20);
-      bm.placeLightweightSpaceship(40,20);
+      board.placeGlider(20,20);
+      board.placeLightweightSpaceship(40,20);
     });
   })
 
   $("#rPentButton").click(function(e) { resetTo(function() {
-      bm.placeRPentamino(50,30);
+      board.placeRPentamino(50,30);
     });
   })
 
   $("#diehardButton").click(function(e) { resetTo(function() {
-      bm.placeDiehard(50,30);
+      board.placeDiehard(50,30);
     });
   })
 
   $("#gosperButton").click(function(e) { resetTo(function() {
-      bm.placeGosperGliderGun(20,30);
+      board.placeGosperGliderGun(20,30);
     });
   })
-
-  // ===============================================
 
 });
