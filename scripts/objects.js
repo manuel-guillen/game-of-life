@@ -64,6 +64,14 @@ LifeBoardManager = function(width, height) {
 		points.forEach(function(p) {that.flipState(p.x,p.y)})
 	}
 
+	that.clearBoard = function() {
+		from_to(0, width-1, function(x){
+			from_to(0, height-1, function(y) {
+				state[x][y] = false;
+			});
+		});
+	}
+
 	Object.freeze(that);
 	return that;
 }

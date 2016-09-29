@@ -74,6 +74,11 @@ $(document).ready(function(e) {
     drawBoard();
   });
 
+  $("#clearButton")[0].addEventListener('click', function(e) {
+    bm.clearBoard();
+    drawBoard();
+  });
+
   // ===============================================
 
 });
