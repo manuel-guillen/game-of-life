@@ -196,6 +196,34 @@ $(document).ready(function(e) {
     drawBoard();
   })
 
+  $("#diehardButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeDiehard(50,30);
+
+    drawBoard();
+  })
+
+  $("#gosperButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeGosperGliderGun(20,30);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });
