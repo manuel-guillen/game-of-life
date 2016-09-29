@@ -18,6 +18,16 @@ div#board {
 
 div#controls {
 	padding-top: 3px;
+	display: inline-block;
+	width: 100%;
+}
+
+div#buttonSet1 {
+	float: left;
+}
+
+div#buttonSet2 {
+	float: right;
 }
 
 button {
