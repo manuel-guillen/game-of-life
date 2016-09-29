@@ -106,7 +106,9 @@ $(document).ready(function(e) {
     drawBoard();
   });
 
-  $("#stillsButton").click(function(e) {
+  // ----------------------------------------------------
+
+  var resetTo = function(f) {
     if(running) {
       clearTimeout(runningVar);
       runButton.removeAttr('style')
@@ -114,114 +116,54 @@ $(document).ready(function(e) {
       running = false;
     }
     bm.clearBoard();
-    
-    bm.placeBlock(10,10);
-    bm.placeBeehive(20,10);
-    bm.placeLoaf(10,20);
-    bm.placeBoat(20,20);
-
+    f();
     drawBoard();
+  }
+
+  $("#stillsButton").click(function(e) { resetTo(function() {
+      bm.placeBlock(10,10);
+      bm.placeBeehive(20,10);
+      bm.placeLoaf(10,20);
+      bm.placeBoat(20,20);
+    });
   })
 
-  $("#smallsButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placeBlinker(10,10);
-    bm.placeToad(20,10);
-    bm.placeBeacon(30,10);
-
-    drawBoard();
+  $("#smallsButton").click(function(e) { resetTo(function() {
+      bm.placeBlinker(10,10);
+      bm.placeToad(20,10);
+      bm.placeBeacon(30,10);
+    });
   })
 
-  $("#pulsarButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placePulsar(50,30);
-
-    drawBoard();
+  $("#pulsarButton").click(function(e) { resetTo(function() {
+      bm.placePulsar(50,30);
+    });
   })
 
-  $("#pentaButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placePentadecathalon(50,30);
-
-    drawBoard();
+  $("#pentaButton").click(function(e) { resetTo(function() {
+      bm.placePentadecathalon(50,30);
+    });
   })
 
-  $("#spacesButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placeGlider(20,20);
-    bm.placeLightweightSpaceship(40,20);
-
-    drawBoard();
+  $("#spacesButton").click(function(e) { resetTo(function() {
+      bm.placeGlider(20,20);
+      bm.placeLightweightSpaceship(40,20);
+    });
   })
 
-  $("#rPentButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placeRPentamino(50,30);
-
-    drawBoard();
+  $("#rPentButton").click(function(e) { resetTo(function() {
+      bm.placeRPentamino(50,30);
+    });
   })
 
-  $("#diehardButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placeDiehard(50,30);
-
-    drawBoard();
+  $("#diehardButton").click(function(e) { resetTo(function() {
+      bm.placeDiehard(50,30);
+    });
   })
 
-  $("#gosperButton").click(function(e) {
-    if(running) {
-      clearTimeout(runningVar);
-      runButton.removeAttr('style')
-               .html("Run");
-      running = false;
-    }
-    bm.clearBoard();
-    
-    bm.placeGosperGliderGun(20,30);
-
-    drawBoard();
+  $("#gosperButton").click(function(e) { resetTo(function() {
+      bm.placeGosperGliderGun(20,30);
+    });
   })
 
   // ===============================================

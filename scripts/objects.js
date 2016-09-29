@@ -83,124 +83,46 @@ LifeBoardManager = function(width, height) {
 	var toadPoints = [Point(1,0), Point(2,0), Point(3,0), Point(0,1), Point(1,1), Point(2,1)]
 	var beaconPoints = [Point(0,0), Point(1,0), Point(0,1), Point(3,3), Point(3,2), Point(2,3)]
 	var pulsarPoints = [Point(2,0), Point(3,0), Point(4,0), Point(2,5), Point(3,5), Point(4,5), Point(2,7), Point(3,7), Point(4,7), 
-					Point(2,12), Point(3,12), Point(4,12), Point(8,0), Point(9,0), Point(10,0), Point(8,5), Point(9,5), Point(10,5),
-					Point(8,7), Point(9,7), Point(10,7), Point(8,12), Point(9,12), Point(10,12), Point(0,2), Point(0,3), Point(0,4),
-					Point(5,2), Point(5,3), Point(5,4), Point(7,2), Point(7,3), Point(7,4), Point(12,2), Point(12,3), Point(12,4),
-					Point(0,8), Point(0,9), Point(0,10), Point(5,8), Point(5,9), Point(5,10), Point(7,8), Point(7,9), Point(7,10),
-					Point(12,8), Point(12,9), Point(12,10)]
+						Point(2,12), Point(3,12), Point(4,12), Point(8,0), Point(9,0), Point(10,0), Point(8,5), Point(9,5), Point(10,5),
+						Point(8,7), Point(9,7), Point(10,7), Point(8,12), Point(9,12), Point(10,12), Point(0,2), Point(0,3), Point(0,4),
+						Point(5,2), Point(5,3), Point(5,4), Point(7,2), Point(7,3), Point(7,4), Point(12,2), Point(12,3), Point(12,4),
+						Point(0,8), Point(0,9), Point(0,10), Point(5,8), Point(5,9), Point(5,10), Point(7,8), Point(7,9), Point(7,10),
+						Point(12,8), Point(12,9), Point(12,10)]
 	var pentadecathalonPoints = [Point(1,0), Point(2,0), Point(3,0), Point(1,3), Point(2,3), Point(3,3), Point(0,1), Point(0,2), 
-								Point(4,1), Point(4,2), Point(1,8), Point(2,8), Point(3,8), Point(1,11), Point(2,11), Point(3,11), 
-								Point(0,9), Point(0,10), Point(4,9), Point(4,10)]
+								 Point(4,1), Point(4,2), Point(1,8), Point(2,8), Point(3,8), Point(1,11), Point(2,11), Point(3,11), 
+								 Point(0,9), Point(0,10), Point(4,9), Point(4,10)]
 	var gliderPoints = [Point(0,0),	Point(1,1),	Point(2,1),	Point(1,2),	Point(0,2)]
 	var lightweightSpaceshipPoints = [Point(1,0), Point(2,0), Point(3,0), Point(4,0), Point(4,1), Point(4,2), Point(3,3), Point(0,3), Point(0,1)];
 	var rPentaminoPoints = [Point(2,0), Point(1,0), Point(1,1), Point(1,2), Point(0,1)]
 	var diehardPoints = [Point(0,1), Point(1,1), Point(1,2), Point(6,0), Point(6,2), Point(5,2), Point(7,2)]
+	var gosperGliderGunPoints = [Point(0,4), Point(0,5), Point(1,4), Point(1,5), Point(13,2), Point(12,2), Point(11,3), Point(10,4),
+								 Point(10,5), Point(10,6), Point(11,7), Point(12,8), Point(13,8), Point(14,5), Point(15,3), Point(16,4),
+								 Point(16,5), Point(17,5), Point(16,6), Point(15,7), Point(20,2), Point(20,3), Point(20,4), Point(21,2),
+								 Point(21,3), Point(21,4), Point(22,1), Point(22,5), Point(24,0), Point(24,1), Point(24,5), Point(24,6),
+								 Point(34,2), Point(34,3), Point(35,2), Point(35,3)]
 
-	var setDeltaPoints = function(x,y, points) {
-		points.forEach(function(p) {
-			state[x+p.getX()][y+p.getY()] = true;
-		})
+	var deltaPointsToPlacer = function(points) {
+		return function(x,y) {
+			points.forEach(function(p) {
+				state[x+p.getX()][y+p.getY()] = true;
+			})	
+		}
 	}
 
-	that.placeBlock = function(x,y) {
-		setDeltaPoints(x,y, blockPoints);
-	}
-
-	that.placeBeehive = function(x,y) {
-		setDeltaPoints(x,y, beehivePoints);
-	}
-
-	that.placeLoaf = function(x,y) {
-		setDeltaPoints(x,y, loafPoints);
-	}
-
-	that.placeBoat = function(x,y) {
-		setDeltaPoints(x,y, boatPoints)
-	}
-
-	that.placeBlinker = function(x,y) {
-		setDeltaPoints(x,y, blinkerPoints)
-	}
-
-	that.placeToad = function(x,y) {
-		setDeltaPoints(x,y, toadPoints);
-	}
-
-	that.placeBeacon = function(x,y) {
-		setDeltaPoints(x,y, beaconPoints)
-	}
-
-	that.placePulsar = function(x,y) {
-		setDeltaPoints(x,y, pulsarPoints);
-	}
-
-	that.placePentadecathalon = function(x,y) {
-		setDeltaPoints(x,y, pentadecathalonPoints);
-	}
-
-	that.placeGlider = function(x,y) {
-		setDeltaPoints(x,y, gliderPoints);
-	}
-
-	that.placeLightweightSpaceship = function(x,y) {
-		setDeltaPoints(x,y, lightweightSpaceshipPoints)
-	}
-
-	that.placeRPentamino = function(x,y) {
-		setDeltaPoints(x,y, rPentaminoPoints);
-	}
-
-	that.placeDiehard = function(x,y) {
-		setDeltaPoints(x,y, diehardPoints);
-	}
-
-	that.placeGosperGliderGun = function(x,y) {
-		state[x][y+4] = true;
-		state[x][y+5] = true;
-		state[x+1][y+4] = true;
-		state[x+1][y+5] = true;
-
-		state[x+13][y+2] = true;
-		state[x+12][y+2] = true;
-		state[x+11][y+3] = true;
-		state[x+10][y+4] = true;
-		state[x+10][y+5] = true;
-		state[x+10][y+6] = true;
-		state[x+11][y+7] = true;
-		state[x+12][y+8] = true;
-		state[x+13][y+8] = true;
-
-		state[x+14][y+5] = true;
-
-		state[x+15][y+3] = true;
-		state[x+16][y+4] = true;
-		state[x+16][y+5] = true;
-		state[x+17][y+5] = true;
-		state[x+16][y+6] = true;
-		state[x+15][y+7] = true;
-
-		state[x+20][y+2] = true;
-		state[x+20][y+3] = true;
-		state[x+20][y+4] = true;
-
-		state[x+21][y+2] = true;
-		state[x+21][y+3] = true;
-		state[x+21][y+4] = true;
-
-		state[x+22][y+1] = true;
-		state[x+22][y+5] = true;
-
-		state[x+24][y] = true;
-		state[x+24][y+1] = true;
-		state[x+24][y+5] = true;
-		state[x+24][y+6] = true;
-
-		state[x+34][y+2] = true;
-		state[x+34][y+3] = true;
-		state[x+35][y+2] = true;
-		state[x+35][y+3] = true;
-
-	}
+	that.placeBlock 				= deltaPointsToPlacer(blockPoints);
+	that.placeBeehive 				= deltaPointsToPlacer(beehivePoints);
+	that.placeLoaf 					= deltaPointsToPlacer(loafPoints);
+	that.placeBoat 					= deltaPointsToPlacer(boatPoints);
+	that.placeBlinker 				= deltaPointsToPlacer(blinkerPoints);
+	that.placeToad 					= deltaPointsToPlacer(toadPoints);
+	that.placeBeacon 				= deltaPointsToPlacer(beaconPoints);
+	that.placePulsar 				= deltaPointsToPlacer(pulsarPoints);
+	that.placePentadecathalon 		= deltaPointsToPlacer(pentadecathalonPoints);
+	that.placeGlider 				= deltaPointsToPlacer(gliderPoints);
+	that.placeLightweightSpaceship	= deltaPointsToPlacer(lightweightSpaceshipPoints);
+	that.placeRPentamino 			= deltaPointsToPlacer(rPentaminoPoints);
+	that.placeDiehard 				= deltaPointsToPlacer(diehardPoints);
+	that.placeGosperGliderGun 		= deltaPointsToPlacer(gosperGliderGunPoints);
 
 	Object.freeze(that);
 	return that;
