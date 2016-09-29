@@ -139,6 +139,20 @@ $(document).ready(function(e) {
     drawBoard();
   })
 
+  $("#pulsarButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placePulsar(50,30);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });

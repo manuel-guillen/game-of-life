@@ -134,6 +134,73 @@ LifeBoardManager = function(width, height) {
 		state[x+2][y+3] = true;
 	}
 
+	that.placePulsar = function(x,y) {
+		state[x+2][y] = true;
+		state[x+3][y] = true;
+		state[x+4][y] = true;
+
+		state[x+2][y+5] = true;
+		state[x+3][y+5] = true;
+		state[x+4][y+5] = true;
+
+		state[x+2][y+7] = true;
+		state[x+3][y+7] = true;
+		state[x+4][y+7] = true;
+
+		state[x+2][y+12] = true;
+		state[x+3][y+12] = true;
+		state[x+4][y+12] = true;
+
+		state[x+8][y] = true;
+		state[x+9][y] = true;
+		state[x+10][y] = true;
+
+		state[x+8][y+5] = true;
+		state[x+9][y+5] = true;
+		state[x+10][y+5] = true;
+
+		state[x+8][y+7] = true;
+		state[x+9][y+7] = true;
+		state[x+10][y+7] = true;
+
+		state[x+8][y+12] = true;
+		state[x+9][y+12] = true;
+		state[x+10][y+12] = true;
+
+		// ----------------------
+		state[x][y+2] = true;
+		state[x][y+3] = true;
+		state[x][y+4] = true;
+
+		state[x+5][y+2] = true;
+		state[x+5][y+3] = true;
+		state[x+5][y+4] = true;
+
+		state[x+7][y+2] = true;
+		state[x+7][y+3] = true;
+		state[x+7][y+4] = true;
+
+		state[x+12][y+2] = true;
+		state[x+12][y+3] = true;
+		state[x+12][y+4] = true;
+
+		state[x][y+8] = true;
+		state[x][y+9] = true;
+		state[x][y+10] = true;
+
+		state[x+5][y+8] = true;
+		state[x+5][y+9] = true;
+		state[x+5][y+10] = true;
+
+		state[x+7][y+8] = true;
+		state[x+7][y+9] = true;
+		state[x+7][y+10] = true;
+
+		state[x+12][y+8] = true;
+		state[x+12][y+9] = true;
+		state[x+12][y+10] = true;
+	}
+
 	Object.freeze(that);
 	return that;
 }
