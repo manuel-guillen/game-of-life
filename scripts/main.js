@@ -153,6 +153,19 @@ $(document).ready(function(e) {
     drawBoard();
   })
 
+  $("#pentaButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placePentadecathalon(50,30);
+
+    drawBoard();
+  })
   // ===============================================
 
 });

@@ -201,6 +201,36 @@ LifeBoardManager = function(width, height) {
 		state[x+12][y+10] = true;
 	}
 
+	that.placePentadecathalon = function(x,y) {
+		state[x+1][y] = true;
+		state[x+2][y] = true;
+		state[x+3][y] = true;
+
+		state[x+1][y+3] = true;
+		state[x+2][y+3] = true;
+		state[x+3][y+3] = true;
+
+		state[x][y+1] = true;
+		state[x][y+2] = true;
+
+		state[x+4][y+1] = true;
+		state[x+4][y+2] = true;
+
+		state[x+1][y+8] = true;
+		state[x+2][y+8] = true;
+		state[x+3][y+8] = true;
+
+		state[x+1][y+11] = true;
+		state[x+2][y+11] = true;
+		state[x+3][y+11] = true;
+
+		state[x][y+9] = true;
+		state[x][y+10] = true;
+
+		state[x+4][y+9] = true;
+		state[x+4][y+10] = true;
+	}
+
 	Object.freeze(that);
 	return that;
 }
