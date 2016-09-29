@@ -42,17 +42,37 @@ $(document).ready(function(e) {
       });
     });  
   }
-
   drawBoard();
-  // =============== LISTENERS SETUP ===============
 
+  // =============== LISTENERS SETUP ===============
+  var holding = false;
+  var dragged = false;
+  
+  canvas.addEventListener('mousedown', function(e) {holding = true;});
+  canvas.addEventListener('mouseup',   function(e) {holding = false;});
+
+  canvas.addEventListener('mousemove', function(evnt) {
+    if (holding) {
+      dragged = true;
+      var point = getMousePosition(canvas, evnt);
+      var x = Math.floor(point.getX()/CELL_SIZE);
+      var y = Math.floor(point.getY()/CELL_SIZE);
+      bm.setState(x,y, evnt.button === 0);
+      drawBoard();
+    }
+  });
+  
   canvas.addEventListener('click', function(evnt) {
+    if (dragged) {
+      dragged = false;
+      return;
+    }
     var point = getMousePosition(canvas, evnt);
     var x = Math.floor(point.getX()/CELL_SIZE);
     var y = Math.floor(point.getY()/CELL_SIZE);
     bm.flipState(x,y);
     drawBoard();
-  })
+  });
 
   // ===============================================
 
