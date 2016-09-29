@@ -44,7 +44,7 @@ $(document).ready(function(e) {
   }
   drawBoard();
 
-  // =============== LISTENERS SETUP ===============
+  // ============ MOUSE LISTENERS SETUP ============
   var holding = false;
   var dragged = false;
   
@@ -74,13 +74,33 @@ $(document).ready(function(e) {
     drawBoard();
   });
 
+  // =========== BUTTON LISTENERS SETUP ============
+  var runButton = $("#runButton")[0];
+
+  var stepAndDraw = function() {
+    bm.lifeStep();
+    drawBoard();
+  }
+
+  var running = false;
+  var runningVar = null;
+  
+  runButton.addEventListener('click', function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.innerHTML = 'Run';
+      running = false;
+    } else {
+      runningVar = setInterval(stepAndDraw, 50);
+      runButton.innerHTML = 'Stop';
+      running = true;
+    }
+  });
+  
+  $("#stepButton")[0].addEventListener('click', function(e) {stepAndDraw()});
+
   $("#clearButton")[0].addEventListener('click', function(e) {
     bm.clearBoard();
-    drawBoard();
-  });
-
-  $("#stepButton")[0].addEventListener('click', function(e) {
-    bm.lifeStep();
     drawBoard();
   });
 
