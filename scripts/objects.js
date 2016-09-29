@@ -45,7 +45,9 @@ LifeBoardManager = function(width, height) {
 
 	that.getAliveNeighbors = function(x,y) {
 		var fltr = function(p) {
-			return p.x >= 0 && p.y >= 0 && p.x < width && p.y < height && state[p.x][p.y];
+			var pX = p.getX();
+			var pY = p.getY();
+			return pX >= 0 && pY >= 0 && pX < width && pY < height && state[pX][pY];
 		}
 		return Point(x,y).getNeighbors().filter(fltr)
 	}
@@ -61,7 +63,7 @@ LifeBoardManager = function(width, height) {
 			})
 		})
 
-		points.forEach(function(p) {that.flipState(p.x,p.y)})
+		points.forEach(function(p) {that.flipState(p.getX(),p.getY())})
 	}
 
 	that.clearBoard = function() {

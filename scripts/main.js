@@ -79,6 +79,11 @@ $(document).ready(function(e) {
     drawBoard();
   });
 
+  $("#stepButton")[0].addEventListener('click', function(e) {
+    bm.lifeStep();
+    drawBoard();
+  });
+
   // ===============================================
 
 });
