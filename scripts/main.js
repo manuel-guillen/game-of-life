@@ -182,6 +182,20 @@ $(document).ready(function(e) {
     drawBoard();
   })
 
+  $("#rPentButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeRPentamino(50,30);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });
