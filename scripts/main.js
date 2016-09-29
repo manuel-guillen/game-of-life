@@ -106,6 +106,23 @@ $(document).ready(function(e) {
     drawBoard();
   });
 
+  $("#stillsButton").click(function(e) {
+    if(running) {
+      clearTimeout(runningVar);
+      runButton.removeAttr('style')
+               .html("Run");
+      running = false;
+    }
+    bm.clearBoard();
+    
+    bm.placeBlock(10,10);
+    bm.placeBeehive(20,10);
+    bm.placeLoaf(10,20);
+    bm.placeBoat(20,20);
+
+    drawBoard();
+  })
+
   // ===============================================
 
 });

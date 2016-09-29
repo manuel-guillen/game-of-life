@@ -74,6 +74,40 @@ LifeBoardManager = function(width, height) {
 		});
 	}
 
+	that.placeBlock = function(x,y) {
+		state[x][y] = true;
+		state[x][y+1] = true;
+		state[x+1][y] = true;
+		state[x+1][y+1] = true;
+	}
+
+	that.placeBeehive = function(x,y) {
+		state[x][y] = true;
+    	state[x+1][y] = true;
+	    state[x+2][y+1] = true;
+    	state[x+1][y+2] = true;
+    	state[x][y+2] = true;
+    	state[x-1][y+1] = true;
+	}
+
+	that.placeLoaf = function(x,y) {
+		state[x][y] = true;
+		state[x+1][y] = true;
+		state[x+2][y+1] = true;
+		state[x+2][y+2] = true;
+		state[x+1][y+3] = true;
+		state[x][y+2] = true;
+		state[x-1][y+1] = true;
+	}
+
+	that.placeBoat = function(x,y) {
+		state[x][y] = true;
+		state[x+1][y] = true;
+		state[x+2][y+1] = true;
+		state[x+1][y+2] = true;
+		state[x][y+1] = true;
+	}
+
 	Object.freeze(that);
 	return that;
 }
