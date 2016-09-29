@@ -41,7 +41,7 @@ LifeBoardManager = function(width, height) {
 
 	that.getState = function(x,y) {return state[x][y]}
 	that.setState = function(x,y, s) {state[x][y] = s}
-	    flipState = function(x,y) {state[x][y] = !state[x][y]}
+	that.flipState = function(x,y) {state[x][y] = !state[x][y]}
 
 	that.getAliveNeighbors = function(x,y) {
 		var fltr = function(p) {
@@ -61,7 +61,7 @@ LifeBoardManager = function(width, height) {
 			})
 		})
 
-		points.forEach(function(p) {flipState(p.x,p.y)})
+		points.forEach(function(p) {that.flipState(p.x,p.y)})
 	}
 
 	Object.freeze(that);
