@@ -4,6 +4,14 @@ from_to = function (from, to, f) {
 			f(from); from_to(from+1, to, f);
 		  }
 
+forAll2D = function(limitX, limitY, f) {
+              from_to(0, limitX-1, function(x) {
+                from_to(0, limitY-1, function(y) {
+                  f(x,y)
+                });
+              });
+           }
+
 // Represents a two-dimensional lattice point (a 2D point of integers) 
 Point = function(x,y) {
 	var that = Object.create(Point.prototype)
@@ -69,25 +77,16 @@ LifeBoard = function(width, height) {
 	*/
 	that.lifeStep = function() {
 		points = []
-		from_to(0, width-1, function(x) {
-			from_to(0, height-1, function(y) {
-				var n = that.getAliveNeighbors(x,y).length;
-				if (state[x][y] && (n < 2 || n > 3) || !state[x][y] && n === 3) {
-					points.push(Point(x,y));
-				}
-			})
+		forAll2D(width, height, function(x,y) {
+			var n = that.getAliveNeighbors(x,y).length;
+			if (state[x][y] && (n < 2 || n > 3) || !state[x][y] && n === 3) points.push(Point(x,y));
 		})
-
 		points.forEach(function(p) {that.flipState(p.getX(),p.getY())})
 	}
 
 	// Clears the board (sets all cells to the dead state).
 	that.clearBoard = function() {
-		from_to(0, width-1, function(x){
-			from_to(0, height-1, function(y) {
-				state[x][y] = false;
-			});
-		});
+		forAll2D(width, height, function(x,y){state[x][y] = false;})
 	}
 
 	// ============== PATTERN METHODS ===================

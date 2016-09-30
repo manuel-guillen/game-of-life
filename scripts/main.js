@@ -10,6 +10,14 @@ from_to = function (from, to, f) {
              f(from); from_to(from+1, to, f);
           }
 
+forAll2D = function(limitX, limitY, f) {
+              from_to(0, limitX-1, function(x) {
+                from_to(0, limitY-1, function(y) {
+                  f(x,y)
+                });
+              });
+           }
+
 // Returns the location of a click event, relative to the canvas clicked
 getMousePosition = function(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
@@ -35,16 +43,14 @@ $(document).ready(function(e) {
   context.strokeStyle = GRAY;
 
   drawBoard = function() {
-    from_to(0, height-1, function(y) {
-      from_to(0, width-1, function(x) {
-        context.beginPath();
-        context.rect(CELL_SIZE*x, CELL_SIZE*y, CELL_SIZE, CELL_SIZE);
-        context.fillStyle = board.getState(x,y) ? BLUE : WHITE;
-        context.fill();
-        context.stroke();
-      });
-    });  
-  }
+                forAll2D(width,height, function(x,y) {
+                  context.beginPath();
+                  context.rect(CELL_SIZE*x, CELL_SIZE*y, CELL_SIZE, CELL_SIZE);
+                  context.fillStyle = board.getState(x,y) ? BLUE : WHITE;
+                  context.fill();
+                  context.stroke();
+                });
+              }
   drawBoard();
 
   // ============ MOUSE LISTENERS SETUP ============
