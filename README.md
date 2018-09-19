@@ -1,5 +1,8 @@
 # The Game of Life
 
+## Deployment
+[Click here](http://manuel-guillen.github.io/game-of-life) to view the deployed project.
+
 ## Introduction
 John Conway's *Game of Life* is a cellular automation (a type of discrete mathematical model) created by British mathematician John Conway in 1970. It is a "zero-player game" in the sense that the automation plays on its own, starting from an initial state, requiring no further input. The user interacts with the game by only setting the initial state, and observing how the game evolves.
 
